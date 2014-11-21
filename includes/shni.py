@@ -20,6 +20,8 @@ class shni():
 	ports = None
 	timeout = 1
 
+	#check if user has hit ctrl-break
+	interrupted = False
 
 	#constructor method
 	#def __init__(self);
@@ -200,8 +202,10 @@ class shni():
 	def logs_menu(self):
 		shni_logs.view_logs_menu()
 		
+	def interrupt_handler(self, signum, frame ):
+		print("Custom interrupt detected...Function will be stopped shortly...")
+		self.interrupted = True
 
-				
 			
 				
 

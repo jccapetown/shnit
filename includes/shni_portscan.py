@@ -1,6 +1,17 @@
 #Port Scanning methods for the shni framework
 from scapy.all import *
 from netaddr import *
+from formatting import bcolors
+
+
+#Intercept signal
+import shni_signals
+import signal
+import sys
+
+
+#Check for interrupts
+interrupted = False
 
 def view_portscan_menu(shni):
 	if shni.config_exist('network'):
@@ -27,6 +38,7 @@ def view_portscan_menu(shni):
 			print "5. TCP Ack scan"
 			print "6. TCP Window Scan"
 			print "7. UDP Scan"
+			print "8. Locate open port on network"
 
 			print " "
 			print "x. Exit"
@@ -57,6 +69,10 @@ def view_portscan_menu(shni):
 
 			if value == '7':
 				udp_scan(shni)
+			
+			if value == '8':
+				locate_port(shni)
+
 
 
 def tcp_connect_scan(shni):
@@ -347,4 +363,63 @@ def udp_scan(shni):
 
 		print ""
 		raw_input("Press any key to continue")
+
+
+
+def locate_port(shni):
+	 	locateport = raw_input("what port would you like to find [21]: ").strip()
+		os.system('clear')
+		
+		print "Shni - Open Port Location"
+		print "========================="
+		print ""
+		print "Getting ready to find all hosts where port %s is open." % locateport
+		print "Finding hosts....."
+		print ""	
+		ip = IPNetwork(shni.config['network'])
+		
+		iplist = []
+		if len(ip) == 1:
+			iplist = ip
+		else:
+			iplist = list(ip)
+		
+		totalips = len(iplist)
+		count = 0	
+		
+		signal.signal(signal.SIGINT,shni.interrupt_handler)
+
+		progresscheck = []
+
+		for networkitem in iplist:
+			count += 1
+			src_port = RandShort()
+			dst_port = int(locateport)
+			dst_ip = str(networkitem)
+			
+			tcp_stealth_scan_resp = sr1(IP(dst=dst_ip)/TCP(sport=src_port,dport=dst_port,flags="S"),timeout=shni.timeout, verbose=False)
+			if(tcp_stealth_scan_resp!=None):
+				if(tcp_stealth_scan_resp.haslayer(TCP)):
+					if(tcp_stealth_scan_resp.getlayer(TCP).flags == 0x12):
+						send_rst = sr(IP(dst=dst_ip)/TCP(sport=src_port,dport=dst_port,flags="R"),timeout=shni.timeout, verbose=False)
+						print bcolors.OKGREEN +  "Port "*2, str(dst_port), "\t Open on ",dst_ip + bcolors.ENDC
+
+			progress =  round(float(count) / float(totalips) * 100)
+			if progress % 5 == 0:
+				if progress not in progresscheck:			
+					progresscheck.append(progress)
+					print bcolors.OKBLUE + str(progress), "% Complete:", count, " of ",  totalips,  bcolors.ENDC
+	
+		
+			#check for user interrupt		
+			if shni.interrupted:
+				shni.interrupted = False
+				break
+
+		print ""
+		raw_input("Press any key to continue")
+
+	
+
+
 		

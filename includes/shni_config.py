@@ -13,6 +13,7 @@ def view_config_menu(shni):
 			print "vp. view ports"
 			print "cn. Change network range/ip"
 			print "cp. Change ports"
+			print "ct. Change scan timeout"
 			print "rc. Reload Config"
 			print ""
 			print "x. Exit"
@@ -38,6 +39,11 @@ def view_config_menu(shni):
 			if str(input) == 'cp':
 				shni.set_config('ports')
 				dashboardvals = shni.get_dashboard_values()
+			
+			if str(input) == 'ct':
+				shni.set_config('scan_timeout')
+				dashboardvals = shni.get_dashboard_values()
+	
 	
 			if str(input) == 'rc':
 				shni.load_config()
