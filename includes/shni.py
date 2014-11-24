@@ -5,6 +5,7 @@ import shni_config
 import shni_portscan
 import shni_sniffing
 import shni_logs
+import shni_virus
 import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 from scapy.all import *
@@ -18,6 +19,7 @@ class shni():
 	dashboard_values = {}
 	
 	ports = None
+	backup_ports = None
 	timeout = 1
 
 	#check if user has hit ctrl-break
@@ -30,6 +32,16 @@ class shni():
 	def initialise(self):
 		self.load_ports()
 		self.load_dashboard_values()
+
+
+	#temporarily save current ports
+	def tmp_save_ports(self):
+		self.backup_ports = self.ports
+
+	#reload tmp saved ports
+	def tmp_load_ports(self):
+		self.ports = self.backup_ports
+		
 
 
 	#method to set the network range
@@ -201,6 +213,9 @@ class shni():
 		
 	def logs_menu(self):
 		shni_logs.view_logs_menu()
+		
+	def virus_menu(self):
+		shni_virus.view_virus_menu(self)
 		
 	def interrupt_handler(self, signum, frame ):
 		print("Custom interrupt detected...Function will be stopped shortly...")
