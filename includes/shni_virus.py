@@ -35,10 +35,10 @@ def view_virus_menu(shni):
 			print "======================"
 			print ""
 
-			print "Network  : %s" % shni.config['network']
-			print "IP's     : %s" % len(list(ip))
+			print "Network	: %s" % shni.config['network']
+			print "IP's		 : %s" % len(list(ip))
 			print "Virusses : %s" % len(viruslist)
-			print "Timeout  : %s" % (shni.timeout)
+			print "Timeout	: %s" % (shni.timeout)
 	
 			print ""
 			print "Menu"
@@ -89,7 +89,7 @@ def load_viruslist():
 		proto = tmplist[0].strip().upper()
 		port = int(tmplist[1].strip())
 		name = tmplist[2].strip()
-		viruslist.append( (proto, port, name  ) )
+		viruslist.append( (proto, port, name	) )
 	return viruslist	
 
 	
@@ -131,7 +131,7 @@ def locate_virus_port(shni):
 			name = item[2]	
 			count += 1
 		
-			print "Searching - (port: %s)  %s" % (dst_port, name )
+			print "Searching - (%s port: %s)	%s" % (proto, dst_port, name )
 		
 			for networkitem in iplist:
 				src_port = RandShort()
@@ -144,13 +144,19 @@ def locate_virus_port(shni):
 						if(tcp_stealth_scan_resp.haslayer(TCP)):
 							if(tcp_stealth_scan_resp.getlayer(TCP).flags == 0x12):
 								send_rst = sr(IP(dst=dst_ip)/TCP(sport=src_port,dport=dst_port,flags="R"),timeout=shni.timeout, verbose=False)
-								print bcolors.OKGREEN + " "*2,  "Possible virus detected on ",dst_ip + bcolors.ENDC
+								print bcolors.OKGREEN + " "*2,	"Possible virus detected on ",dst_ip + bcolors.ENDC
 
-				progress =  round(float(count) / float(totalvirusses) * 100)
+				
+				if proto.upper() == 'UDP':
+					udp_scan(dst_ip,dst_port,shni.timeout)
+		
+
+
+				progress =	round(float(count) / float(totalvirusses) * 100)
 				if progress % 5 == 0:
 					if progress not in progresscheck:			
 						progresscheck.append(progress)
-						print bcolors.OKBLUE + str(progress), "% Complete:", count, " of ",  totalvirusses,  bcolors.ENDC
+						print bcolors.OKBLUE + str(progress), "% Complete:", count, " of ",	totalvirusses, " inspections", 	bcolors.ENDC
 	
 		
 			#check for user interrupt		
@@ -166,4 +172,13 @@ def locate_virus_port(shni):
 				
 
 
-		
+def udp_scan(dst_ip,dst_port,dst_timeout):
+	try:
+		udp_scan_resp = sr1(IP(dst=dst_ip)/UDP(dport=dst_port),timeout=dst_timeout, verbose=False)
+		if udp_scan_resp!=None:
+			if (udp_scan_resp.haslayer(UDP)):
+				print bcolors.OKGREEN + " "*2,	"Possible virus detected on ",dst_ip + bcolors.ENDC
+	except Exception, e:
+		print e
+		raw_input("Error")
+	
