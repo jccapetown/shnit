@@ -32,7 +32,8 @@ def run(shni):
 		print "2. Port Scans"
 		print "3. Sniffing"
 		print "4. Virusses"
-		print "5. Logs"
+		print "5. Detection"
+		print "6. Logs"
 		print ""
 		print "x. Exit"
 		input = raw_input("Select an option: ")
@@ -48,6 +49,8 @@ def run(shni):
 		if str(input) == '4':
 			shni.virus_menu()
 		if str(input) == '5':
+			shni.detection_menu()
+		if str(input) == '6':
 			shni.logs_menu()
 		if str(input) == 'x':
 			break;

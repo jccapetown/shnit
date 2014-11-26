@@ -5,6 +5,7 @@ import shni_config
 import shni_portscan
 import shni_sniffing
 import shni_logs
+import shni_detection
 import shni_virus
 import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
@@ -216,6 +217,9 @@ class shni():
 		
 	def virus_menu(self):
 		shni_virus.view_virus_menu(self)
+		
+	def detection_menu(self):
+		shni_detection.view_detection_menu(self)
 		
 	def interrupt_handler(self, signum, frame ):
 		print("Custom interrupt detected...Function will be stopped shortly...")
