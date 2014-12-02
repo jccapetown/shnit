@@ -45,26 +45,50 @@ def tracert(shni):
 		print ""
 		hostname = raw_input("Enter Hostname: ")
 
+		print ""
+		print "Trying UDP"
+		print "=========="
+
 		for i in range(1, 28):
-		    pkt = IP(dst=hostname, ttl=i) / UDP(dport=33434)
-		    # Send the packet and get a reply
-		    reply = sr1(pkt, verbose=0, timeout=1)
-		    if reply is None:
-    		    # No reply =(
-		        break
-		    elif reply.type == 3:
-		        # We've reached our destination
-		        print "Done!", reply.src
-		        break
-		    else:
-		        # We're in the middle somewhere
-		        print "%d hops away: " % i , reply.src
+				pkt = IP(dst=hostname, ttl=i) / UDP(dport=33434)
+				# Send the packet and get a reply
+				reply = sr1(pkt, verbose=0, timeout=1)
+				destinationreached = False
+				if reply is None:
+						# No reply =(
+						print "%d hops away: " % i , "No Reply. Possibly Blocked"
+						print "Rage quit!"
+						break
+				elif reply.type == 3:
+						# We've reached our destination
+						print "Done!", reply.src
+						break
+				else:
+						# We're in the middle somewhere
+						print "%d hops away: " % i , reply.src
 		
 
-		
-#		ans,unans=sr(IP(dst=hostname, ttl=(1, 30),id=RandShort())/TCP(flags=0x2))
-#		for snd,rcv in ans:
-#			print snd.ttl, rcv.src, isinstance(rcv.payload, TCP)			
-		
+		print ""
+		print "Trying TCP"
+		print "=========="
+		for i in range(1, 28):
+				pkt = IP(dst=hostname, ttl=i,id=RandShort())/TCP(flags=0x2)
+				# Send the packet and get a reply
+				reply = sr1(pkt, verbose=0, timeout=1)
+				destinationreached = False
+				if reply is None:
+						# No reply =(
+						print "%d hops away: " % i , "No Reply. Possibly Blocked"
+						print "Rage quit!"
+						break
+				elif reply.type == 3:
+						# We've reached our destination
+						print "Done!", reply.src
+						break
+				else:
+						# We're in the middle somewhere
+						print "%d hops away: " % i , reply.src
+			
+		print " "		
 		raw_input("Continue")
 

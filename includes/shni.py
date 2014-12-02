@@ -5,6 +5,7 @@ import shni_config
 import shni_portscan
 import shni_sniffing
 import shni_logs
+import shni_fragmentation
 import shni_detection
 import shni_virus
 import logging
@@ -221,6 +222,9 @@ class shni():
 	def detection_menu(self):
 		shni_detection.view_detection_menu(self)
 		
+	def fragmentation_menu(self):
+		shni_fragmentation.view_fragmentation_menu(self)
+
 	def interrupt_handler(self, signum, frame ):
 		print("Custom interrupt detected...Function will be stopped shortly...")
 		self.interrupted = True
