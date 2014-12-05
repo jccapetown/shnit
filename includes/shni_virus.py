@@ -2,6 +2,7 @@
 from scapy.all import *
 from netaddr import *
 from formatting import bcolors
+import datetime
 
 
 #Intercept signal
@@ -125,14 +126,13 @@ def locate_virus_port(shni):
 		#First look by port. This way we can group virusses to ips
 		global viruslist
 		totalvirusses = len(viruslist) * len(iplist)
+		lenviruslist = len(viruslist)
 		for item in viruslist:
 			proto = item[0]
 			dst_port = item[1]
 			name = item[2]	
 			count += 1
-		
-			print "Searching - (%s port: %s)	%s" % (proto, dst_port, name )
-		
+			print "%s :: Searching - (%s port: %s)	%s (%s of %s)" % (datetime.datetime.now(),proto, dst_port, name,count, lenviruslist )
 			for networkitem in iplist:
 				src_port = RandShort()
 				dst_ip = str(networkitem)

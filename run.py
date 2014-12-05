@@ -34,6 +34,7 @@ def run(shni):
 		print "4. Virusses"
 		print "5. Detection"
 		print "6. Fragmentation"
+		print "7. Bandwidth Monitoring"
 		print "l. Logs"
 		print ""
 		print "x. Exit"
@@ -53,12 +54,14 @@ def run(shni):
 		if str(input) == '4':
 			shni.virus_menu()
 
+		if str(input) == '5':
+			shni.detection_menu()
+	
 		if str(input) == '6':
 			shni.fragmentation_menu()
 
-		if str(input) == '5':
-			shni.detection_menu()
-
+		if str(input) == '7':
+			shni.bandwidth_menu()
 
 
 		if str(input) == 'l':
