@@ -25,6 +25,7 @@ def view_detection_menu(shni):
 			print "Menu"
 			print "===="
 			print "1. Trace Route"
+			print "2. Arp Ping (Mac Detection)"
 
 			print " "
 			print "x. Exit"
@@ -37,6 +38,8 @@ def view_detection_menu(shni):
 			if value == '1':
 				tracert(shni)
 
+			if value == '2':
+				arp_ping(shni)
 
 def tracert(shni):
 		os.system('clear')
@@ -93,4 +96,14 @@ def tracert(shni):
 		raw_input("Continue")
 
 
+def arp_ping(shni):
+	os.system('clear')
+	print "Shni - Arp Ping"
+	print "=================="
+	print ""
+	cidr = raw_input("Enter the network IP/Cidr Range: ")
+	ans,unans=srp(Ether(dst="ff:ff:ff:ff:ff:ff")/ARP(pdst=cidr),timeout=2, verbose=False)
+	ans.summary(lambda (s,r): r.sprintf("%Ether.src% %ARP.psrc%") )
+	print " "		
+	raw_input("Continue")
 

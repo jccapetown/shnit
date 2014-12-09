@@ -35,6 +35,8 @@ def run(shni):
 		print "5. Detection"
 		print "6. Fragmentation"
 		print "7. Bandwidth Monitoring"
+		print "8. Graphs"
+		print "9. Network Attacks"
 		print "l. Logs"
 		print ""
 		print "x. Exit"
@@ -62,6 +64,12 @@ def run(shni):
 
 		if str(input) == '7':
 			shni.bandwidth_menu()
+
+		if str(input) == '8':
+			shni.graph_menu()
+
+		if str(input) == '9':
+			shni.attacks_menu()
 
 
 		if str(input) == 'l':

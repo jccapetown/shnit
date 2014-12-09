@@ -9,8 +9,8 @@ def view_bandwidth_menu(shni):
 	while input != 'x':
 
 		os.system('clear')
-		print "Sniffing"
-		print "========"
+		print "Shni - Bandwidth Monitoring"
+		print "==========================="
 		print "1. Monitor Ip Bandwidth"
 		print "2. Monitor Port Bandwidth"
 		print ""

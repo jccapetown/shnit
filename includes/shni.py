@@ -9,6 +9,8 @@ import shni_fragmentation
 import shni_detection
 import shni_bandwidth_monitor
 import shni_virus
+import shni_graphs
+import shni_attacks
 import logging
 logging.getLogger("scapy.runtime").setLevel(logging.ERROR)
 from scapy.all import *
@@ -228,6 +230,13 @@ class shni():
 
 	def bandwidth_menu(self):
 		shni_bandwidth_monitor.view_bandwidth_menu(self)
+	
+	def graph_menu(self):
+		shni_graphs.view_graphs_menu(self)
+
+	def attacks_menu(self):
+		shni_attacks.view_attacks_menu(self)
+
 
 	def interrupt_handler(self, signum, frame ):
 		print("Custom interrupt detected...Function will be stopped shortly...")
