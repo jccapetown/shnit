@@ -8,5 +8,10 @@ wait
 echo "installing prerequesites"
 apt-get install python-scapy &
 wait
+
 apt-get install python-netaddr &
 wait
+
+apt-get install p0f &
+wait
+

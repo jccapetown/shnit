@@ -19,8 +19,6 @@ def ftp_cred(packet):
 			if Raw in packet:
 				rawpkt = str(packet[Raw]).strip()
 				if "USER " in rawpkt:
-					print  server, ": ", rawpkt
-					#return  server, ": ", rawpkt
+					return  server + ": " + rawpkt
 				if "PASS " in rawpkt:
-					print server, ": ", rawpkt
-					#return server, ": ", rawpkt
+					return server + ": " + rawpkt
