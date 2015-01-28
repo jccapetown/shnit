@@ -2,7 +2,7 @@
 from scapy.all import *
 from netaddr import *
 from formatting import bcolors
-
+import string
 
 #Intercept signal
 import shni_signals

@@ -22,7 +22,9 @@ def run(shni):
 		print "SHNI " 
 		print "----"
 		print ""
-		print "Configured for %s" % shni.config['network']		
+		
+		if 'network' in shni.config:
+			print "Configured for %s" % shni.config['network']		
 		print dashboardvals
 		print ""
 		print ""

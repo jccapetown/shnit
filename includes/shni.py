@@ -85,7 +85,7 @@ class shni():
 		for key in self.dashboard_values:
 			if len(key) > length:
 				lenght = len(key)
-		lenght += 2
+		length += 2
 
 
 		for key in self.dashboard_values:

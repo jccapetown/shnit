@@ -6,12 +6,12 @@ wait
 
 
 echo "installing prerequesites"
-apt-get install python-scapy &
+apt-get install python-scapy -y --force-yes &
 wait
 
-apt-get install python-netaddr &
+apt-get install python-netaddr -y  --force-yes &
 wait
 
-apt-get install p0f &
+apt-get install p0f -y --force-yes &
 wait
 
