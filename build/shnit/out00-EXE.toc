@@ -1,0 +1,9 @@
+('/opt/infosec/shnit/build/shnit/shnit',
+ True,
+ False,
+ None,
+ None,
+ [],
+ None,
+ False,
+ 1429014978)
