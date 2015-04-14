@@ -1,0 +1,29 @@
+#!/usr/bin/python
+#Interface for other applications to use this toolset
+from includes.shni import shni as shniclass
+from includes import shni_portscan
+import sys
+
+
+valid_calls = ['portscan']
+
+if len(sys.argv) <= 1:
+	print "No Arguments specified"
+	sys.exit()
+
+if not sys.argv[0].lower() in valid_calls:
+	print "Could not find valid system call argument '%s'. Only the following is allowed:" % sys.argv[1]
+	print ",".join(valid_calls)
+
+if sys.argv[1] == 'portscan':
+	#portscan requires range and port
+	#eg interface.py portscan 10.100.5.0/24 443
+	
+	shni = shniclass()
+	shni.config['network'] =  sys.argv[2]
+	shni.config['ports'] = sys.argv[3]
+	shni_portscan.locate_port(shni, True)
+		
+	
+
+

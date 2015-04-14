@@ -1,9 +1,11 @@
 #!/usr/bin/python
 from includes.shni import shni as shniclass
 #from netaddr import *
-import os
+import os,sys
 
-
+#Cool trick to see if user has root privileges
+if not os.geteuid() == 0:
+    sys.exit('Script must be run as root')
 
 #check if a network range has been defined
 def initialise():

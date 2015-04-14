@@ -151,14 +151,5 @@ def arp_cache_poison_dos(shni):
 		print "Done!"
 	raw_input("Continue")
 
-	
-	
-	
-
-
-
-
-
-
 def packet_generator(size=70000, chars=string.ascii_uppercase + string.digits):
 	return ''.join(random.choice(chars) for x in range(size))

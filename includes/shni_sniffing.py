@@ -28,24 +28,33 @@ def view_sniffing_menu(shni):
 
 
 def sniff_packets(shni):
-	os.system('clear')
-	sniff_filter = raw_input("Please enter your filter [None]: ")
-	#setup sniff, filtering for IP traffic
-	packets = sniff(filter=sniff_filter,prn=shni_sniffing_custom_filter.custom_filter)	
-	print"*******************"
-	print "Creating Log file"
-	f = open('logs/sniffer.log.txt',"wb+")
-	print "Writing packets to log file"
-	for pkt in packets:
-		f.write("%s%s" % (pkt, "\n"))
-	f.close()
-	print "Files have been written to 'logs/sniffer.log.txt'"
-	raw_input("continue...")	
-
-
+	try:
+		os.system('clear')
+		print '''
+Filter examples:
+	host 192.168.1.1
+	icmp
+	icmp and host 192.168.1.50
+'''
+		sniff_filter = raw_input("Please enter your filter [None]: ")
+		#setup sniff, filtering for IP traffic
+		packets = sniff(filter=sniff_filter,prn=shni_sniffing_custom_filter.custom_filter)	
+		print"*******************"
+		print "Creating Log file"
+		f = open('logs/sniffer.log.txt',"wb+")
+		print "Writing packets to log file"
+		for pkt in packets:
+			f.write("%s%s" % (pkt, "\n"))
+		f.close()
+		print "Files have been written to 'logs/sniffer.log.txt'"
+		raw_input("continue...")	
+	except:
+		print 'Error in filter. quiting.';
+		raw_input('Continue...')
 
 def sniff_ftp_creds(shni):
 	os.system('clear')
+	print 'Sniffing for FTP traffic this side of the switch. Press Ctrl+C to stop..'
 	sniff(filter='port 21', prn=shni_sniffing_custom_filter.ftp_cred )	
 	packets = sniff(filter='port 21', prn=shni_sniffing_custom_filter.ftp_cred )	
 	
@@ -62,6 +71,7 @@ def sniff_ftp_creds(shni):
 
 def sniff_mail_creds(shni):
 	os.system('clear')
+	print 'Sniffing for Email traffic this side of the switch. Press Ctrl+C to stop..'
 	sfilter = "tcp "
 	sfilter += "and (port 25 or port 110)"
 	formatstring = "%IP.src%:%TCP.sport% -> %IP.dst%:%TCP.dport%  %2s,TCP.flags% : %TCP.payload%"

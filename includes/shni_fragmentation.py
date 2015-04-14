@@ -46,7 +46,7 @@ def view_fragmentation_menu(shni):
 		clFragment = frag_class()
 		while 1==1:
 			os.system('clear')
-			print "Shni - Fragmentation"
+			print "Shni - Fragmentation - Not Functional - Under Construction"
 			print "================"
 			print ""
 			print "Current Fagmentation info"
@@ -76,20 +76,20 @@ def view_fragmentation_menu(shni):
 				break
 
 			
-			if value == '1':
-				create_ip_header(clFragment)
+			#if value == '1':
+			#	create_ip_header(clFragment)
 
-			if value == '2':
-				create_proto_layer(clFragment)
+			#if value == '2':
+			#	create_proto_layer(clFragment)
 		
-			if value == '3':
-				set_original_data(clFragment)
+			#if value == '3':
+			#	set_original_data(clFragment)
 			
-			if value == '4':
-				set_fragment_size(clFragment)
+			#if value == '4':
+			#	set_fragment_size(clFragment)
 
-			if value == '5':
-				clFragment.show_original_packet()
+			#if value == '5':
+			#	clFragment.show_original_packet()
 
 
 def create_ip_header(clFragment):

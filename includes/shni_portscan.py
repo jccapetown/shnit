@@ -366,14 +366,21 @@ def udp_scan(shni):
 
 
 
-def locate_port(shni):
-	 	locateport = raw_input("what port would you like to find [21]: ").strip()
+def locate_port(shni, useconfig = False):
+		if not useconfig:
+		 	locateport = raw_input("what port would you like to find [21]: ").strip()
+		else:
+			locateport = shni.config['ports']
+		
+		if locateport.strip() == '':
+			locateport = '21'
+ 
 		os.system('clear')
 		
 		print "Shni - Open Port Location"
 		print "========================="
 		print ""
-		print "Getting ready to find all hosts where port %s is open." % locateport
+		print "Getting ready to find all hosts in %s where port %s is open." %(shni.config['network'],  locateport)
 		print "Finding hosts....."
 		print ""	
 		ip = IPNetwork(shni.config['network'])

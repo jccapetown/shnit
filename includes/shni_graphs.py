@@ -26,6 +26,7 @@ def get_packet(packet):
 def sniff_conversation(shni):
 	os.system('clear')
 	print "Remember to stop sniffing by pressing Ctl+C"
+	print "You need Graphviz and Imagemagic to create conversations. Install with Apt-get or alike."
 	sniff_filter = raw_input("Please enter the host ip to track [all]: ")
 	if not sniff_filter == '':
 		sniff_filter = "host %s" % sniff_filter

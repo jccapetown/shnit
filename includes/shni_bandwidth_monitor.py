@@ -115,7 +115,7 @@ def monitor_portpackets(shni):
 	
 	print "Checking Port Bandwidth Usage"
 	print "============================="
-	sport= int(raw_input("port [all]: "))
+	sport= raw_input("port [21]: ")	
 	global packetcount
 	packetcount = 0
 
@@ -126,9 +126,12 @@ def monitor_portpackets(shni):
 	os.system("clear")
 	print "Checking Ports Usage"
 	print "===================="
-	print "Gathering:"	
+	print "Gathering port trffic information:"	
 	#sniff(iface=interface, prn=traffic_monitor_callback, store=False,timeout=sample_interval, filter=sfilter )
-	sfilter = "port %s" % sport
+	if sport.strip() == '':
+		sfilter = "port 21"
+	else:
+		sfilter = "port %s" % int(sport)
 	sniff(prn=traffic_port_monitor_callback, store=False, filter=sfilter)
 		# ... and now comes the second place where you're happy to use a
 	# Counter!
