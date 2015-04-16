@@ -1,48 +1,83 @@
-shnit 
+SHNIT 
 =====
 
 Sabrewolf Hacking Network Inspection Tool
 
 This is a complete interactive framework with minimal typing required. The framework is built around network inspection and service identification.
-It receives ongoing development.
 
-#New
-Added a compile standalone version. It can be found in the "dist" folder. It should not require any package installations or anything.
+Run the tool directly from the "dist" folder by running "sudo ./shnit" 
+This is a standalone that requires no package installation.
+
+#Remember to
+Change the configuration file "shni.cfg" to change default settings.
+
+If you would like to run it from source first run the install.sh file as root. "sudo ./install.sh"
 
 
 #Features
-========
-1. Port scan servers with well known scan types
+=========
 
-	-> Window Scan
-	-> Ack Scan
-	-> Null Scan
-	-> Christmas Scan
-	-> Stealth Scan
-	-> Connect Scan
-	-> Fin Scan
-	-> UDP Scan
+1.PortScanning
 
-2. Sniffing
+	a.TCP Connect scan
+	
+	b.TCP Syn Scan
+	
+	c.TCP Xmas scan
+	
+	d.TCP Fin scan
+	
+	e.TCP Ack scan
+	
+	f.TCP Window scan
+	
+	g.UDP scan
+	
+	h.Locate open ports on the network
 
-	-> Sniff traffic with custom Filters
-	-> Output to human readable log files
+2.Sniffing
 
-3. Logs
+	a.Sniff Packets on the network (with filtering)
+	
+	b.Sniff unsecure FTP Data
+	
+	c.Sniff unsecure email Credentials on network
+	
+	3.Viruses
+	
+	a.Locate Trojans on network
+	
+	b.Virus List (+- 400)
+	
+4.Detection
+	a.Traceroute (udp and tcp)
+	
+	b.Arp Ping a CIDR range for MAC addresses
+	
+5.Bandwidth Monitoring
 
-	-> View	logs from within the framework
+	a.Monitor traffic usage per IP
+	
+	b.Monitor traffic usage per port
+	
+	6.Graphs
+	
+	a.Graph all host conversations
+	
+7.Network Attacks
 
-4. Virusses
+	a.Malformed Packets
+	
+	b.Ping of Death
+	
+	c.Teardrop Attack (Nestea)
+	
+	d.Land Attack
+	
+	e.ARP Cache Poisoning – DOS a target
 
-	-> Detect Remote access Virusses/Trojans on the network
 
-5. Config
+Regards
 
-	-> Create Config once off or overide it within the framework
-	-> See network details on bit level
-	-> Other interesting network details like if IP's are private, public, unicast, etc. 
-
-
-Send me an email: jc@exa.co.za
-
+Jacques Coetzee
 	
