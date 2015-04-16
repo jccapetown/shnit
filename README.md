@@ -4,56 +4,69 @@ shnit
 Sabrewolf Hacking Network Inspection Tool
 
 This is a complete interactive framework with minimal typing required. The framework is built around network inspection and service identification.
-It receives ongoing development.
-
-#New
-Added a compile standalone version. It can be found in the "dist" folder. It should not require any package installations or anything.
 
 
 #Features
+=========
 
-1. Port scan servers with well known scan types
+1.PortScanning
 
-	-> Window Scan
+	a.TCP Connect scan
 	
-	-> Ack Scan
-
-	-> Null Scan
-
-	-> Christmas Scan
-
-	-> Stealth Scan
+	b.TCP Syn Scan
 	
-	-> Connect Scan
+	c.TCP Xmas scan
 	
-	-> Fin Scan
+	d.TCP Fin scan
 	
-	-> UDP Scan
-
-2. Sniffing
-
-	-> Sniff traffic with custom Filters
+	e.TCP Ack scan
 	
-	-> Output to human readable log files
-
-3. Logs
-
-	-> View	logs from within the framework
-
-4. Virusses
-
-	-> Detect Remote access Virusses/Trojans on the network
-
-5. Config
-
-	-> Create Config once off or overide it within the framework
+	f.TCP Window scan
 	
-	-> See network details on bit level
+	g.UDP scan
 	
-	-> Other interesting network details like if IP's are private, public, unicast, etc. 
+	h.Locate open ports on the network
 
+2.Sniffing
 
-Send me an email: jc@exa.co.za
+	a.Sniff Packets on the network (with filtering)
+	
+	b.Sniff unsecure FTP Data
+	
+	c.Sniff unsecure email Credentials on network
+	
+	3.Viruses
+	
+	a.Locate Trojans on network
+	
+	b.Virus List (+- 400)
+	
+4.Detection
+	a.Traceroute (udp and tcp)
+	
+	b.Arp Ping a CIDR range for MAC addresses
+	
+5.Bandwidth Monitoring
+
+	a.Monitor traffic usage per IP
+	
+	b.Monitor traffic usage per port
+	
+	6.Graphs
+	
+	a.Graph all host conversations
+	
+7.Network Attacks
+
+	a.Malformed Packets
+	
+	b.Ping of Death
+	
+	c.Teardrop Attack (Nestea)
+	
+	d.Land Attack
+	
+	e.ARP Cache Poisoning – DOS a target
 
 
 Regards
