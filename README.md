@@ -1,9 +1,17 @@
-shnit 
+SHNIT 
 =====
 
 Sabrewolf Hacking Network Inspection Tool
 
 This is a complete interactive framework with minimal typing required. The framework is built around network inspection and service identification.
+
+Run the tool directly from the "dist" folder by running "sudo ./shnit. 
+This is a standalone that requires no package installation.
+
+#Remember to
+Change the configuration file "shni.cfg" to change default settings.
+
+If you would like to run it from source first run the install.sh file as route.
 
 
 #Features
