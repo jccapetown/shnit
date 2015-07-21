@@ -166,18 +166,23 @@ def monitor_portpackets(shni):
 		if not (srcip,dstip,dstport) in tmpdict:
 			tmpdict[(srcip,dstip,dstport)] = {}
 			tmpdict[(srcip,dstip,dstport)]['pktlen'] = 0
+			tmpdict[(srcip,dstip,dstport)]['data'] = ''
+			tmpdict[(srcip,dstip,dstport)]['totalpkts'] = 0
 	
 		tmpdict[(srcip,dstip,dstport)]['srcip'] = srcip
 		tmpdict[(srcip,dstip,dstport)]['dstip'] = dstip
 		tmpdict[(srcip,dstip,dstport)]['dstport'] = dstport
 		tmpdict[(srcip,dstip,dstport)]['pktlen'] += pktlen
+		tmpdict[(srcip,dstip,dstport)]['totalpkts'] += 1
+		#tmpdict[(srcip,dstip,dstport)]['data'] = '%s%s' % ( tmpdict[(srcip,dstip,dstport)]['data'], pktdata  )
 	
 	tmpdict = sorted(tmpdict.items(), key = lambda x: x[1]['pktlen'], reverse=True)
 	
-	print "Source".ljust(30), "Destination".ljust(30), "Port".ljust(7), "Total"
-	print ("="*6).ljust(30),  ("="*11).ljust(30), ("="*4).ljust(7), "="*5
+	print "Source".ljust(30), "Destination".ljust(30), "Port".ljust(7), "Size".ljust(10), "Packets"
+	print ("="*6).ljust(30),  ("="*11).ljust(30), ("="*4).ljust(7), ("="*4).ljust(10), "="*7
 	for ix,i in  enumerate(tmpdict):
-		print i[1]['srcip'].ljust(30), i[1]['dstip'].ljust(30), str(i[1]['dstport']).ljust(7), human(i[1]['pktlen'])
+		print i[1]['srcip'].ljust(30), i[1]['dstip'].ljust(30), str(i[1]['dstport']).ljust(7),  human(i[1]['pktlen']).ljust(10), str(i[1]['totalpkts']).ljust(7) 
+		#print ' ->', i[1]['data'] 
 		if ix > 14: 
 			break;
 
