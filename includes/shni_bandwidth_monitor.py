@@ -3,6 +3,13 @@ from scapy.all import *
 import shni_sniffing_custom_filter
 from collections import Counter,OrderedDict
 import readline
+import signal
+import sys
+import signal
+
+def signal_handler(signal, frame):
+        print('You pressed Ctrl+C!')
+        sys.exit(0)
 
 def view_bandwidth_menu(shni):
 	input = ""
@@ -44,16 +51,21 @@ def monitor_packets(shni):
 	traffic = Counter()
 	# You should probably use a cache for your IP resolutions
 	hosts = {}
-	
-	os.system("clear")
-	print "Checking Bandwidth Usage"
-	print "========================"
-	print "Gathering:"	
-	#sniff(iface=interface, prn=traffic_monitor_callback, store=False,timeout=sample_interval, filter=sfilter )
-	sniff(prn=traffic_monitor_callback, store=False, filter=sfilter)
+
+	try:
+		os.system("clear")
+		print "Checking Bandwidth Usage"
+		print "========================"
+		print "Gathering:"	
+		#sniff(iface=interface, prn=traffic_monitor_callback, store=False,timeout=sample_interval, filter=sfilter )
+		sniff(prn=traffic_monitor_callback, store=False, filter=sfilter)
 		# ... and now comes the second place where you're happy to use a
-	# Counter!
-	# Plus you can use value unpacking in your for statement.
+		# Counter!
+		# Plus you can use value unpacking in your for statement.
+	except:
+		pass
+
+
 	os.system('clear')
 	print "Checking Bandwidth Usage"
 	print "========================"
@@ -68,7 +80,7 @@ def monitor_packets(shni):
 	list =  sorted(test, reverse=True)
 	data = {}
 	
-	top_records = 10	
+	top_records = 10
 
 	for xcount, i in enumerate(list):
 		if xcount >= top_records:
@@ -115,7 +127,7 @@ def monitor_portpackets(shni):
 	
 	print "Checking Port Bandwidth Usage"
 	print "============================="
-	sport= raw_input("port [21]: ")	
+	sport= raw_input("port [all]: ")	
 	global packetcount
 	packetcount = 0
 
@@ -129,11 +141,17 @@ def monitor_portpackets(shni):
 	print "Gathering port trffic information:"	
 	#sniff(iface=interface, prn=traffic_monitor_callback, store=False,timeout=sample_interval, filter=sfilter )
 	if sport.strip() == '':
-		sfilter = "port 21"
+		#sfilter = "port 21"
+		sfilter = ""
 	else:
 		sfilter = "port %s" % int(sport)
-	sniff(prn=traffic_port_monitor_callback, store=False, filter=sfilter)
-		# ... and now comes the second place where you're happy to use a
+
+	try:
+
+		sniff(prn=traffic_port_monitor_callback, store=False, filter=sfilter)
+	except KeyboardInterrupt:
+                pass
+	# ... and now comes the second place where you're happy to use a
 	# Counter!
 	# Plus you can use value unpacking in your for statement.
 	os.system('clear')
@@ -145,50 +163,23 @@ def monitor_portpackets(shni):
 	tmpdict = {}
 	for i in portdict:
 		srcip,srcport,dstip, dstport,pktlen,pktdata = portdict[i]
-		if sport == srcport:
-		#if 1==1:
-			if not srcport in tmpdict:
-				tmpdict[srcport] = {}
-
-			if not srcip in tmpdict[srcport]:
-				tmpdict[srcport][srcip]= {}
-
-			if not dstip in tmpdict[srcport][srcip]:
-				tmpdict[srcport][srcip][dstip] = {}
-				tmpdict[srcport][srcip][dstip]['datalen'] = 0
-				tmpdict[srcport][srcip][dstip]['packets'] = 0
-				tmpdict[srcport][srcip][dstip]['data'] = ''
-
-			tmpdict[srcport][srcip][dstip]['datalen'] += pktlen
-			tmpdict[srcport][srcip][dstip]['packets'] += 1
-			tmpdict[srcport][srcip][dstip]['data'] = "%s%s" % (tmpdict[srcport][srcip][dstip]['data'], str(pktdata) )
+		if not (srcip,dstip,dstport) in tmpdict:
+			tmpdict[(srcip,dstip,dstport)] = {}
+			tmpdict[(srcip,dstip,dstport)]['pktlen'] = 0
 	
-	for port in tmpdict:
-		indent = 0
-		print "*"*30
-		print "PORT: %s" % port
-		print "-----"
-		for srcip in tmpdict[port]:
-			indent = 8
-			try:
-				dnssrcip = "%s (%s)" % (srcip, socket.gethostbyaddr(srcip)[0])
-				print "-"*indent,"%s" % dnssrcip
-			except:
-				print "-"*indent,"%s" % srcip
-
-			for dstip in tmpdict[port][srcip]:
-				indent =16
-				print "-"*indent, "%s" % dstip
-				print "-"*indent," * Data len: %s" % human( tmpdict[port][srcip][dstip]['datalen'])
-				print "-"*indent," * Packets : %s" % tmpdict[port][srcip][dstip]['packets']
-				print "-"*indent," * Data : %s" % tmpdict[port][srcip][dstip]['data']
-
-
-
+		tmpdict[(srcip,dstip,dstport)]['srcip'] = srcip
+		tmpdict[(srcip,dstip,dstport)]['dstip'] = dstip
+		tmpdict[(srcip,dstip,dstport)]['dstport'] = dstport
+		tmpdict[(srcip,dstip,dstport)]['pktlen'] += pktlen
 	
-		print "*"*30
-		print ""
-
+	tmpdict = sorted(tmpdict.items(), key = lambda x: x[1]['pktlen'], reverse=True)
+	
+	print "Source".ljust(30), "Destination".ljust(30), "Port".ljust(7), "Total"
+	print ("="*6).ljust(30),  ("="*11).ljust(30), ("="*4).ljust(7), "="*5
+	for ix,i in  enumerate(tmpdict):
+		print i[1]['srcip'].ljust(30), i[1]['dstip'].ljust(30), str(i[1]['dstport']).ljust(7), human(i[1]['pktlen'])
+		if ix > 14: 
+			break;
 
 
 	print ""
